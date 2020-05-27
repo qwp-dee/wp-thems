@@ -56,7 +56,10 @@
     
 
     <div class="generic-content">
+      
+<!-- wp_trim_words( get_the_content(), 20 )  -->
       <?php the_content(); ?>
+      
     </div>
 
   </div>
