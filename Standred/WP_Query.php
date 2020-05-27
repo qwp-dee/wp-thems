@@ -30,28 +30,25 @@
 				wp_reset_postdata();
 			endif;
 			?>
-
-	</div>
-
-
+		</div>  
+<!-- 	/End row -->
 
 
-	<div class="row">
-		<?php
-		// Second Loop
-			$args = array(
-				'post_type' => 'post',
-				'posts_per_page' => 2,
-				'category__not_in' => array( 3 ),
-			    'category__in' => array( 7, 11 ),
-				'offset' => 1
-				);
-		    $secondary = new WP_Query( $args );
+
+<div class="row">
+	<?php
+		$args = array(
+			'post_type' => 'post',
+			'posts_per_page' => 2,
+			'category__not_in' => array( 3 ),
+			 'category__in' => array( 7, 11 ),
+			  'offset' => 1 );
+	$secondary = new WP_Query( $args );
                if( $secondary->have_posts() ):
-					while( $secondary->have_posts() ): $secondary->the_post(); ?>
+		   while( $secondary->have_posts() ): $secondary->the_post(); ?>
                 
-<div class="col-sm-6">
-	<article <?php post_class( array( 'class' => 'secondary' ) ); ?>>
+        <div class="col-sm-6">
+	 <article <?php post_class( array( 'class' => 'secondary' ) ); ?>>
 
 	<div class="thumbnail">
 		<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'large', array( 'class' => 'img-fluid' ) ); ?></a>
@@ -72,7 +69,7 @@
 </div>
   <?php
 	endwhile;
-		wp_reset_postdata();
+	 wp_reset_postdata();
   endif; ?>								
  </div>
 	</div>
@@ -89,33 +86,25 @@
 			if ($ourPosts->have_posts()) :
 				while ($ourPosts->have_posts()) : $ourPosts->the_post(); ?>
 					<!-- post-item -->
-						<div class="post-item clearfix">
-							<!-- post-thumbnail -->
-							<div class="square-thumbnail">
-								<a href="<?php the_permalink(); ?>"><?php
-									if (has_post_thumbnail()) {
-										the_post_thumbnail();
-										} ?>			
-								</a>
-							</div><!-- /post-thumbnail -->
-
+					<div class="post-item clearfix">
+					<!-- post-thumbnail -->
+					<div class="posts-thumbnail">
+					<a href="<?php the_permalink(); ?>"><?php
+						if (has_post_thumbnail()) { the_post_thumbnail(); } ?> </a>
+					</div><!-- /post-thumbnail -->
 						<h4><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a> <span class="subtle-date"><?php the_time('n/j/Y'); ?></span></h4>
 							<?php the_excerpt(); 
-
-							wp_trim_words( get_the_content(), 20 ) ?>
-						</div><!-- /post-item -->
-						<?php endwhile;
-							else :
-								// fallback no content message here
-						endif;
-						wp_reset_postdata(); ?>
+								wp_trim_words( get_the_content(), 20 ) ?>
+					</div><!-- /post-item -->
+					<?php endwhile;
+					else :
+					// fallback no content message here
+				endif;
+			wp_reset_postdata(); ?>				
+		<span class="horiz-center"><a href="<?php echo get_category_link(6); ?>" class="btn-a">View all Posts</a></span>
 						
-					<span class="horiz-center"><a href="<?php echo get_category_link(6); ?>" class="btn-a">View all Posts</a></span>
-						
-		</div><!-- /post-item -->
+	</div><!-- /post-item -->
 </div>
-
-
 
 
 
