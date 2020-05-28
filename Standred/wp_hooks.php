@@ -463,3 +463,62 @@ function custom_taxonomy() {
 add_action( 'init', 'custom_taxonomy', 0 );
 
 add_action( 'init', 'wp_custom_post_type' );
+
+
+
+// Show template Name on adimn bar 
+
+
+
+
+function template_file_name_on_top($wp_admin_bar){
+	if ( is_admin() or ! is_super_admin() ) {
+			return;
+		}
+		global $template;
+		$template_file_name		 = basename( $template );
+		$template_relative_path	 = str_replace( ABSPATH . 'wp-content/', '', $template );
+		$current_theme		 = wp_get_theme();
+		$current_theme_name	 = $current_theme->Name;
+		$parent_theme_name	 = '';
+
+		if ( is_child_theme() ) {
+			$child_theme_name	 = __( 'Theme name: ', 'show-current-template' )
+					. $current_theme_name;
+			$parent_theme_name	 = $current_theme->parent()->Name;
+			$parent_theme_name	 = ' (' . $parent_theme_name
+					. __( "'s child", 'show-current-template' ) . ")";
+			$parent_or_child	 = $child_theme_name . $parent_theme_name;
+		} else {
+			$parent_or_child = __( 'Theme name: ', 'show-current-template' )
+					. $current_theme_name . ' (' . __( 'NOT a child theme', 'show-current-template' ) . ')';
+		}
+
+		$included_files = get_included_files();
+
+		sort( $included_files );
+		$included_files_list = '';
+		foreach ( $included_files as $filename ) {
+			if ( strstr( $filename, 'themes' ) ) {
+				$filepath = strstr( $filename, 'themes' );
+				if ( $template_relative_path == $filepath ) {
+					$included_files_list .= '';
+				} else {
+					$included_files_list .= '<li>' . "$filepath" . '</li>';
+				}
+			}
+		}
+
+		global $wp_admin_bar;
+		$args = array(
+			'id'	 => 'template_file_name_on_top',
+			'title'	 => __( 'Template:', 'show-current-template' )
+			. '<span class="show-template-name"> ' . $template_file_name . '</span>',
+		);
+
+		$wp_admin_bar->add_node( $args );
+
+}
+add_action("admin_bar_menu","template_file_name_on_top",9999 );
+
+
