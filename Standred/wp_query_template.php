@@ -195,5 +195,58 @@ if ($the_query->have_posts()) {    // checking we have post or not provided cond
 }else{
 	// no posts
 }
-
 ?>
+
+
+
+
+
+<!--Stories Blog Categories -->
+<div class="col-xs-12 col-sm-12 col-md-12">             	
+<!-- Wp_query arg -->
+<?php
+$args = array(
+    'post_type'    =>  'stories', // post type cpt name
+    'post_status'  =>  'publish',
+    'orderby'      =>  'date', 
+    'order'        =>  'DSC',
+    'posts_per_page'    => -1,
+    'paged'             => 1,
+    'tax_query' => array(
+        array(
+            'taxonomy' => 'story_type', // taxonomy name 
+            'field'    => 'slug',
+            'terms'    => 'blog',      // taxonomy-term name    
+        ),
+    ),
+);
+$query = new WP_Query( $args ); ?>
+
+<!-- if condition  -->
+<?php if ( $query->have_posts()) : ?>
+<h3>Custom post type and custom texnomy term displaying</h3>
+
+<div class="__team_content row" id="__team_isotop">
+<!-- while condition  -->
+<?php while ( $query->have_posts() ) : $query->the_post(); 
+$publish_date = get_the_date( ' M j, Y' ); ?>
+	<div class="col-xs-12 col-sm-6 col-md-4 grid staff">
+		<div class="__team_bg">
+			<div class="team_desc">
+				<h4 style="height: 100px;">
+					<small>Punlished on : <?php echo $publish_date; ?></small>
+					<a href="<?php the_permalink();?>"><?php the_title(); ?></a>
+				</h4>
+				<div class="__location">&nbsp;</div>
+			</div>
+		</div>
+	</div>
+	<!-- while End condition  -->
+	 <?php endwhile; ?>	
+	</div>
+	<!-- loop if end -->
+	<?php endif; ?>	
+</div>         
+</div>  <!-- End Stories Blog Categories  -->
+       
+
