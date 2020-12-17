@@ -242,7 +242,7 @@ $publish_date = get_the_date( ' M j, Y' ); ?>
 		</div>
 	</div>
 	<!-- while End condition  -->
-	 <?php endwhile; ?>	
+	 <?php endwhile; wp_reset_postdata(); ?>	
 	</div>
 	<!-- loop if end -->
 	<?php endif; ?>	
